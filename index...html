@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhanu Teja | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body { margin:0; font-family:'DM Sans',sans-serif; background:#0a0f1a; color:#fff; overflow-x:hidden; }
+canvas { position:fixed; top:0; left:0; z-index:-1; }
+
+/* Navbar */
+nav {
+ position:fixed; top:0; width:100%;
+ background:rgba(0,0,0,0.5);
+ backdrop-filter:blur(10px);
+ display:flex; justify-content:center; gap:20px;
+ padding:10px;
+ z-index:100;
+}
+nav a { color:#aaa; text-decoration:none; }
+nav a:hover { color:#64ffda; }
+
+/* Hero */
+header { text-align:center; padding:120px 20px; }
+header img { width:140px; border-radius:50%; border:3px solid #64ffda; }
+h1 { color:#64ffda; }
+
+/* Sections */
+section {
+ padding:60px 20px;
+ max-width:1000px;
+ margin:auto;
+ opacity:0;
+ transform:translateY(40px);
+ transition:0.8s;
+}
+section.show { opacity:1; transform:translateY(0); }
+
+/* Cards */
+.card {
+ background:rgba(255,255,255,0.05);
+ padding:20px;
+ margin:15px 0;
+ border-radius:10px;
+ transition:0.3s;
+}
+.card:hover { transform:translateY(-5px); border:1px solid #64ffda; }
+
+/* Skills */
+.bar { height:6px; background:#222; border-radius:5px; }
+.fill { height:6px; background:#64ffda; width:0; transition:2s; }
+
+/* Certificates */
+.cert-grid {
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:20px;
+}
+.cert-grid img { width:100%; border-radius:10px; }
+
+/* Button */
+button {
+ padding:10px 20px;
+ background:#64ffda;
+ border:none;
+ border-radius:5px;
+ cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+<a href="#about">About</a>
+<a href="#projects">Projects</a>
+<a href="#skills">Skills</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<header>
+<img src="images/profile.jpg">
+<h1>Manikala Bhanu Teja</h1>
+<p>Projects Engineer — Mechatronics</p>
+<p>Automation | IoT | Digital Transformation</p>
+</header>
+
+<section id="about">
+<h2>About</h2>
+<p>Projects Engineer with 4+ years experience in automation & manufacturing.</p>
+</section>
+
+<section id="projects">
+<h2>Projects</h2>
+<div class="card">315kW Test Rig</div>
+<div class="card">SEPSAC Digitalization</div>
+<div class="card">CBN Grinding Machine</div>
+</section>
+
+<section id="skills">
+<h2>Skills</h2>
+<div>PLC<div class="bar"><div class="fill" style="width:90%"></div></div></div>
+<div>SCADA<div class="bar"><div class="fill" style="width:85%"></div></div></div>
+<div>IoT<div class="bar"><div class="fill" style="width:80%"></div></div></div>
+</section>
+
+<section>
+<h2>Certificates</h2>
+<div class="cert-grid">
+<img src="images/cert1.jpg">
+<img src="images/cert2.jpg">
+<img src="images/cert3.jpg">
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<p>Email: bhanutejamanikala@gmail.com</p>
+<button onclick="window.print()">Download Resume</button>
+</section>
+
+<script>
+// Scroll animation
+document.querySelectorAll("section").forEach(sec=>{
+ window.addEventListener("scroll",()=>{
+  if(sec.getBoundingClientRect().top < window.innerHeight-100){
+    sec.classList.add("show");
+  }
+ });
+});
+
+// Particle background
+const c=document.getElementById("bg"),ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+let p=Array.from({length:50},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:Math.random()-0.5,vy:Math.random()-0.5}));
+
+function d(){
+ ctx.clearRect(0,0,c.width,c.height);
+ p.forEach(e=>{
+  e.x+=e.vx; e.y+=e.vy;
+  if(e.x<0||e.x>c.width) e.vx*=-1;
+  if(e.y<0||e.y>c.height) e.vy*=-1;
+  ctx.beginPath(); ctx.arc(e.x,e.y,2,0,Math.PI*2); ctx.fillStyle="#64ffda"; ctx.fill();
+ });
+ requestAnimationFrame(d);
+}
+d();
+</script>
+
+</body>
+</html>
